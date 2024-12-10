@@ -1,10 +1,16 @@
 import pkg from 'whatsapp-web.js';
 const { Client,LocalAuth } = pkg;
-
 import qrcode from "qrcode-terminal";
+import path from "path";
+
 
 const whatsappClient = new Client({
-    authStrategy:new LocalAuth
+    authStrategy:new LocalAuth({
+
+        clientId: "session",
+        dataPath: path.join('/tmp', '.wwebjs_auth')
+
+    })
 })
 
 whatsappClient.on("qr",(qr)=> qrcode.generate(qr, {small:true}));
