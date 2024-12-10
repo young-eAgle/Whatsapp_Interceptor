@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node":"20.x"
+  },
   "scripts": {
     "dev": "env-cmd -f .env nodemon src/index.js",
     "start": "env-cmd -f .env node src/index.js"
