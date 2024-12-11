@@ -28,9 +28,20 @@ const getLaunchOptions = async () => {
 
 
 const ensureAuthDirectory=(authPath)=>{
+  console.log(`Attempting to create directory at :${authPath}`);
   if(!fs.existsSync(authPath)){
-    fs.mkdirSync(authPath,{recursive:true});
-    console.log(`Created directory at : ${authPath}`);
+    try {
+      fs.mkdirSync(authPath,{recursive:true});
+      console.log(`Created directory at : ${authPath}`);
+      
+
+
+    } catch (error) {
+      console.error(`Failed to create directory at : ${authPath}`, error);
+      throw error;
+      
+    }
+   
   }
 };
 

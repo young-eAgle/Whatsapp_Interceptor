@@ -11,5 +11,8 @@
       "src": "/(.*)",
       "dest": "api/index.js"
     }
-  ]
+  ],
+  "env":{
+    "IS_SERVERLESS":"true"
+  }
 }
