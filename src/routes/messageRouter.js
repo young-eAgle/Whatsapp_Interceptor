@@ -1,6 +1,7 @@
 import express, {Router} from "express";
 import whatsappClient from "../services/whatsappClient.js";
 
+
 const router = Router();
 
 
