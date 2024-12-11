@@ -4,6 +4,7 @@ import qrcode from "qrcode-terminal";
 import path from "path";
 import chromium from "chrome-aws-lambda";
 import puppeteer from  'puppeteer';
+import fs from "fs";
 
 
 const getLaunchOptions = async () => {
@@ -24,17 +25,32 @@ const getLaunchOptions = async () => {
   }
 };
 
+
+
+const ensureAuthDirectory=(authPath)=>{
+  if(!fs.existsSync(authPath)){
+    fs.mkdirSync(authPath,{recursive:true});
+    console.log(`Created directory at : ${authPath}`);
+  }
+};
+
 const createWhatsAppClient = async () => {
   const launchOptions = await getLaunchOptions();
+
+
+  // define authentication path 
+
+  const authPath=path.join(
+    process.env.IS_SERVERLESS == "true"?"/tmp":".",".wwebjs_auth"
+  )
+
+  ensureAuthDirectory(authPath);
 
   const whatsappClient = new Client({
     authStrategy: new LocalAuth({
       clientId: "session",
       // dataPath: path.join('/tmp', '.wwebjs_auth')
-      dataPath: path.join(
-        process.env.IS_SERVERLESS ? "/tmp" : ".",
-        ".wwebjs_auth"
-      ),
+      dataPath: authPath,
     }),
     puppeteer: launchOptions,
   });
