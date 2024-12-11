@@ -7,6 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
+    "postinstall": "apt-get update && apt-get install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libgbm1 libpango-1.0-0 libpangocairo-1.0-0 libasound2",
     "dev": "env-cmd -f .env nodemon api/index.js",
     "start": "env-cmd -f .env node api/index.js"
   },
@@ -14,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sparticuz/chromium": "^131.0.1",
     "chrome-aws-lambda": "^10.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",

@@ -2,7 +2,7 @@ import pkg from "whatsapp-web.js";
 const { Client, LocalAuth } = pkg;
 import qrcode from "qrcode-terminal";
 import path from "path";
-import chromium from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium";
 import puppeteer from  'puppeteer';
 import fs from "fs";
 
@@ -13,8 +13,7 @@ const getLaunchOptions = async () => {
 
     return {
       args: [...chromium.args],
-      executablePath:
-        (await chromium.executablePath) || "/usr/bin/chromium-browser",
+      executablePath:await chromium.executablePath,
       headless: chromium.headless,
     };
   } else {
