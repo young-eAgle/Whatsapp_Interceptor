@@ -3,7 +3,7 @@
   "functions": {
     "api/index.js": {
       "memory": 1024,
-      "maxDuration": 10
+      "maxDuration": 30
     }
   },
   "routes": [
@@ -12,7 +12,8 @@
       "dest": "api/index.js"
     }
   ],
-  "env":{
-    "IS_SERVERLESS":"true"
-  }
+    "env":{
+      "IS_SERVERLESS":"true"
+    }
+  
 }
