@@ -8,7 +8,7 @@ import fs from "fs";
 
 const getLaunchOptions = async () => {
   if (process.env.IS_SERVERLESS) {
-    const executablePath = process.env.CHROMIUM_PATH || await chromium.executablePath;
+    const executablePath =  await chromium.executablePath;
        console.log("path of executable section:",executablePath);
     if (typeof executablePath !== "string" || !executablePath) {
       throw new Error(
