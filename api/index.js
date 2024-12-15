@@ -13,30 +13,32 @@ app.use(express.json());
 
 // Here express.json is built in middle ware that parses the incoming json making the body available in the req.body.
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, etc.)
-      if (!origin) return callback(null, true);
 
-      // Define allowed origins dynamically
-      const allowedOrigins = [
-        "http://95.217.67.77:7003",
-        "http://bimserver:7003",
-        "http://192.168.43.145:8080",
-        "http://localhost:8080",
-      ];
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // Allow requests with no origin (like mobile apps, curl, etc.)
+//       if (!origin) return callback(null, true);
 
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true); // Origin is allowed
-      } else {
-        callback(new Error("Not allowed by CORS")); // Reject other origins
-      }
-    },
-    methods: ["GET", "POST"], // Allow only required HTTP methods
-    allowedHeaders: ["Content-Type"], // Restrict headers
-  })
-);
+//       // Define allowed origins dynamically
+//       const allowedOrigins = [
+//         "http://95.217.67.77:7003",
+//         "http://bimserver:7003",
+//         "http://192.168.43.145:8080",
+//         "http://localhost:8080",
+//       ];
+
+//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true); // Origin is allowed
+//       } else {
+//         callback(new Error("Not allowed by CORS")); // Reject other origins
+//       }
+//     },
+//     methods: ["GET", "POST"], // Allow only required HTTP methods
+//     allowedHeaders: ["Content-Type"], // Restrict headers
+//   })
+// );
 
 app.use(messageRouter);
 

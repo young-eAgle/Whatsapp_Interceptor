@@ -1,5 +1,5 @@
 import express, {Router} from "express";
-import whatsappClient from "../services/whatsappClient.js";
+import WhatsAppClientPromise from "../services/whatsappClient.js";
 
 
 const router = Router();
@@ -39,7 +39,7 @@ router.post('/message', async(req, res) =>{
 
     try {
 
-
+          const whatsappClient=await WhatsAppClientPromise;
         await whatsappClient.sendMessage(formattedPhoneNumber, message);
          res.status(200).send({status:'success',message:'Message sent successfully.'});
 
