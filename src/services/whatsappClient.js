@@ -3,18 +3,20 @@ const { Client, LocalAuth } = pkg;
 import qrcode from "qrcode-terminal";
 import path from "path";
 import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer";
+// import puppeteer from "puppeteer";
 import fs from "fs";
 
 const getLaunchOptions = async () => {
-  if (process.env.IS_SERVERLESS) {
+  if (process.env.IS_SERVERLESS == "true") {
+  
     const executablePath =  await chromium.executablePath;
-       console.log("path of executable section:",executablePath);
+       console.log("Chromium executable path for serverless:",executablePath);
     if (typeof executablePath !== "string" || !executablePath) {
       throw new Error(
         "Chromium executablePath is invalid for serverless environment"
       );
     }
+    
     // for vercel
 
     return {
@@ -30,10 +32,25 @@ const getLaunchOptions = async () => {
       headless: chromium.headless,
     };
   } else {
+    // For local development
+    const localExecutablePath = puppeteer.executablePath();
+    console.log("Chromium executablePath for local:", localExecutablePath);
+
+    if(!fs.existsSync(localExecutablePath)){
+      throw new Error(
+        `Invalid Chromium path:${localExecutablePath}.Please verify your CHROMIUM_PATH.`
+      );
+    }
     return {
-      args: [],
-      executablePath: puppeteer.executablePath(), // Ensure it’s a string
+      args: [
+        "--no-sandbox",                
+        "--disable-setuid-sandbox",    
+        "--disable-gpu",              
+        "--disable-dev-shm-usage",
+      ],
+      executablePath: localExecutablePath, // Ensure it’s a string
       headless: true,
+      dumpio: true,
     };
   }
 };
@@ -56,18 +73,10 @@ const ensureAuthDirectory = (authPath) => {
 const createWhatsAppClient = async () => {
   const launchOptions = await getLaunchOptions();
 
-  console.log("Executable Path:", launchOptions.executablePath);
-
-  if (typeof launchOptions.executablePath !== "string") {
-    throw new Error("Invalid executablePath: Must be a string.");
-  }
-
+  console.log("Using launch options:", launchOptions);
   // define authentication path
 
-  const authPath = path.join(
-    process.env.IS_SERVERLESS == "true" ? "/tmp" : ".",
-    ".wwebjs_auth"
-  );
+  const authPath = path.join("/tmp",".wwebjs_auth");
 
   ensureAuthDirectory(authPath);
 
@@ -89,8 +98,8 @@ const createWhatsAppClient = async () => {
     console.log("Whatsapp client is ready");
   });
 
-  whatsappClient.on("disconneted", () => {
-    console.log("Whatsapp client disconnected");
+  whatsappClient.on("disconneted", (reason) => {
+    console.log("Whatsapp client disconnected:",reason);
   });
 
   whatsappClient.on("auth_failure", (msg) => {
