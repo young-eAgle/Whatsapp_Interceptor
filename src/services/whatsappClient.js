@@ -3,7 +3,6 @@ const { Client, LocalAuth } = pkg;
 import qrcode from "qrcode-terminal";
 import path from "path";
 import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer";
 import fs from "fs";
 
 const getLaunchOptions = async () => {
