@@ -4,9 +4,9 @@
     "api/index.js": {
       "runtime": "nodejs20.x",
       "memory": 1024,
-      "maxDuration": 10,
-      "includeFiles":[
-               "node_modules/chrome-aws-lambda/**/*"
+      "maxDuration": 30,
+      "includeFiles": [
+        "node_modules/@sparticuz/chromium/**/*"
       ]
     }
   },
@@ -16,11 +16,9 @@
       "dest": "api/index.js"
     }
   ],
-    "env":{
-      "IS_SERVERLESS":"true"
-    }
-  
-
+  "env": {
+    "IS_SERVERLESS": "true",
+    "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true",
+    "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/chromium"
+  }
 }
-
-
