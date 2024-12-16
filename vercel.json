@@ -13,9 +13,6 @@
       "dest": "api/index.js"
     }
   ],
-  "includeFiles": [
-    "node_modules/@sparticuz/chromium/**"
-  ],
   "env": {
     "IS_SERVERLESS": "true",
     "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true"
