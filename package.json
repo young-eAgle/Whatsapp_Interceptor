@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "env-cmd -f .env nodemon api/index.js",
-    "start": "env-cmd -f .env node api/index.js"
+    "start": "node api/index.js"
   },
   "author": "Asif Razza",
   "license": "ISC",
